@@ -8,7 +8,7 @@ Pixel-Anchor: A Fast Oriented Scene Text Detector with Combined Networks
 
 为了处理这些问题，我们提出一种新颖的端到端可训练的深度神经网络框架，称为Pixel-Anchor，其结合基于像素和基于锚方法的优势。整个框架包含两部分，称为基于像素的模块（pixel-based module）和基于锚（anchor-based module）的模块。这两部分共享从ResNet-50提取的特征。在Pixel-Anchor中，来自pixel-based module的分割热图（heat map）通过anchor-level注意力传入anchor-based module，这提高了anchor-based-method的准确率。在推理阶段，我们进行融合非最大抑制（NMS）[14]以获得最终检测。具体地，我们在anchor-based module中通过锚修剪（trimming）仅保留小而长的锚，同时移除pixel-based模块中小型检测框。最后，我们聚合所有余下的检测框，并进行级联NMS以获得最终的检测结果。Pixel-Anchor的有效性从pixel-based模块和anchor-based模块的共享特征获得。
 
-在pixel-based模块中，我们将FPN和ASPP进行组合以作为语义分割的encoder-decoder结构。通过在 $1/16$ 的特征图上执行ASPP操作来获得大感受野是一种低成本的方式。在ancho-based模块中，我们采用SSD作为基本框架，并提出Adaptive Predictor Layer（APL）来更好地检测在尺寸和宽高比上具有较大变化的场景文本。APL可以有效地调整网络的感受野以适应文本的形状。为了检测跨域图像的长文本线，在APL中，我们进一步提出“long anchor” 和 “anchor density” 。
+在pixel-based模块中，我们将FPN和ASPP进行组合以作为语义分割的encoder-decoder结构。通过在 $1/16$ 的特征图上执行ASPP操作来获得大感受野是一种低成本的方式。在anchor-based模块中，我们采用SSD作为基本框架，并提出Adaptive Predictor Layer（APL）来更好地检测在尺寸和宽高比上具有较大变化的场景文本。APL可以有效地调整网络的感受野以适应文本的形状。为了检测跨域图像的长文本线，在APL中，我们进一步提出“long anchor” 和 “anchor density” 。
 
 本文的主要贡献如下：
 - 我们提出Pixel-Anchor，一种单发（one-shot）的定向场景文本检测器，其通过特征共享、anchor-level注意力机制和融合NMS结合了基于像素和基于锚的方法的优点。
@@ -30,7 +30,7 @@ Pixel-Anchor: A Fast Oriented Scene Text Detector with Combined Networks
 ## 2.2. The anchor-based method
 锚的概念最初来源于Faster R-CNN，它是两步的通用对象检测框架。首先，它使用锚（先验、默认框）生成提议；接着，描述提议的深度特征通过RoI池化从特征图提取，并且具有深度特征回归对象相对于锚的偏移，而不是直接预测边界框。局域锚的边界框回归在许多流行的检测框架（如YOLO、SSD）中使用。SSD生成特征金塔层次，并且将不同尺度的锚放置于每个特征图，在所有基于锚的方法中，SSD在速度和准确率之间有很好的平衡，并且广泛用于场景文本检测。
 
-Textboxes和Textboxes++修改SSD以检测自然场景文本。Textboxes提出采用SSD网络的三个特殊设计以有效地检测水平场景文本。一是，添加大宽高比的锚以更好匹配文本框的形状，具体地，设置锚的纵横比为1、2、3、5、7 和 10 。二是，通过在垂直方向偏移锚来增加毛的密度，从而检测密集文本。三是，采用 $1\times5$ 卷积滤波器而不是标准的 $3 \times 3$ 的滤波器，$1 \times 5$ 的卷积滤波器可以产生矩形感受野，其更好地适应较大纵横比。基于Textboxes，Textboxes++将默认框的纵横比增加到1、2、3、5、5、 $1/2$ 、 $1/3$ 、 $1/5$ ，以及使用 $3\times5$ 卷积滤波器。
+Textboxes和Textboxes++修改SSD以检测自然场景文本。Textboxes提出采用SSD网络的三个特殊设计以有效地检测水平场景文本。一是，添加大宽高比的锚以更好匹配文本框的形状，具体地，设置锚的纵横比为1、2、3、5、7 和 10 。二是，通过在垂直方向偏移锚来增加锚的密度，从而检测密集文本。三是，采用 $1\times5$ 卷积滤波器而不是标准的 $3 \times 3$ 的滤波器，$1 \times 5$ 的卷积滤波器可以产生矩形感受野，其更好地适应较大纵横比。基于Textboxes，Textboxes++将默认框的纵横比增加到1、2、3、5、5、 $1/2$ 、 $1/3$ 、 $1/5$ ，以及使用 $3\times5$ 卷积滤波器。
 
 ![anchor-matching-dilemma](./images/pixel-anchor/anchor-matching-dilemma.png)
 
@@ -120,7 +120,7 @@ $$L_{a_{dt}} = L_{a_{cls}} + \alpha_a L_{a_{loc}} \tag 6$$
 $$L_{all} = (\alpha_{all}L_{p_{dt}} + L_{a_{pt}}) \tag 7$$
 其中 $\alpha_{all}$ 是平衡pixel-based损失和anchor-based损失的权重，我们设置为3.0 。对于数据增强，我们从图像上均匀采样 $640 \times 640$ 的子图以组成大小为32的mini-batch 。模型使用ImageNet预训练。包含800k的合成文本图像 $SynthText$ 用于预训练我们的模型，然后在相应的基准数据集上继续训练过程。对于每个数据集，第一阶段的初始学习率为 0.0001，然后在第二阶段训练减少为 0.00001 。
 
-在推理阶段，我们提出“fusion NMS”来获得最终检测结果。我们分配anchor-based模块检测小文本和长文本，而pixel-based模块检测中型尺寸的文本。在anchor-based的APL中，使用了锚修剪。 **$1/4$ 特征图的所有锚（即3.3节中提到的a、b、c类型）和其他特征图（即3.3节中的d和e类型）上的所有长锚被保留。因为 $1/4$ 特征图（在尺寸上通常较小）上锚通常具有足够的空间来包含两个大角度的文本实例，而长锚仅能匹配小角度的文本实例。“Anchor Matching Dilemma” 可能很少发生。在pixel-based模块中，当预测文本框的MBR（最小外接矩形）的大小小于10个像素，以及其MBR的纵横比不再 $[1:15, 15:1]$ 中时，我们过滤掉这些预测框。最后，我们聚合所有余下的候选文本框，并执行与Textboxes++相似的级联NMS以获得最终检测结果。**  **首先，在预测文本四边形的MBR上应用具有相对高的IOU阈值（例如0.5）的NMS。MBR上的这种操作耗时少得多，并且删除了大多数候选框。然后将文本四边形上具有较低IOU阈值（例如0.2）的耗时NMS应用于的剩余候选框。** 因为pixel-based模块的候选文本框和pixel-based的文本框是重叠的，_我们将1.0加到ancho-based模块预测的文本框的得分中，这些文本框在进行NMS时具有更高的优先级。_
+在推理阶段，我们提出“fusion NMS”来获得最终检测结果。我们分配anchor-based模块检测小文本和长文本，而pixel-based模块检测中型尺寸的文本。在anchor-based的APL中，使用了锚修剪。 **$1/4$ 特征图的所有锚（即3.3节中提到的a、b、c类型）和其他特征图（即3.3节中的d和e类型）上的所有长锚被保留。因为 $1/4$ 特征图（在尺寸上通常较小）上锚通常具有足够的空间来包含两个大角度的文本实例，而长锚仅能匹配小角度的文本实例。“Anchor Matching Dilemma” 可能很少发生。在pixel-based模块中，当预测文本框的MBR（最小外接矩形）的大小小于10个像素，以及其MBR的纵横比不在 $[1:15, 15:1]$ 中时，我们过滤掉这些预测框。最后，我们聚合所有余下的候选文本框，并执行与Textboxes++相似的级联NMS以获得最终检测结果。**  **首先，在预测文本四边形的MBR上应用具有相对高的IOU阈值（例如0.5）的NMS。MBR上的这种操作耗时少得多，并且删除了大多数候选框。然后将文本四边形上具有较低IOU阈值（例如0.2）的耗时NMS应用于的剩余候选框。** 因为pixel-based模块的候选文本框和pixel-based的文本框是重叠的，_我们将1.0加到ancho-based模块预测的文本框的得分中，这些文本框在进行NMS时具有更高的优先级。_
 
 # 4. Experiments
 为了获取模型的特征，我们首先使用公共SynthText数据集和我们自己的海报数据集，然后在两个具有挑战性的公共基准上评估我们的方法：ICDAR 2015 [29] and ICDAR 2017 MLT [30] 。

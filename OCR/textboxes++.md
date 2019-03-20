@@ -75,8 +75,8 @@ $$
 _3）卷积层：_ TextBoxes中使用 $1\times5$ 卷积滤波器处理长单词或文本线。而本文中，使用 $3 \times 5$ 卷积滤波器以处理定向文本。这些Inception风格的滤波器使用矩形感受野，这更好地匹配更大纵横比的单词。正方形感受野带来的噪声信号可以避免。
 
 ## C. Adapted training for arbitrary-oriented text detection
-_Ground Truth representation:_ 对于III-B节中描述的两种目标边界框表示，采用如下的ground-truth的定向文本表征：
-- a）Quadrilateral： 对于每个ground-truth定向文本 $T$ ，令 $G_b = (\tilde{x}_0^b, \tilde{y}_0^b, \tilde{w}_0^b, \tilde{h}_0^b)$ 为其水平矩形ground-truth（即包围 $T$ 的最小水平矩形），其中 $(\tilde{x}_0^b, \tilde{y}_0^b)$ 是 $G_b$ 的中心， $\tilde{w}_0^b$ 和 $\tilde{h}_0^b$ 分别为 $G_b$ 的宽和高。根据公式（1），这个矩形ground-truth也可以表示为 $G_b = (b_1, b_2, b_3, b_4)$ ，其中 (b_1, b_2, b_3, b_4) 是 $G_b$ 顺时针顺序的4个定点， $b_1$ 是左上角点。使用定向文本ground=truth $T$ 的四个顶点来表示由 $G_q = (q_1, q_2, q_3, q_4) = (\tilde{x}_1^q, \tilde{y}_1^q, \tilde{x}_2^q, \tilde{y}_2^q, \tilde{x}_3^q, \tilde{y}_3^q, \tilde{x}_4^q, \tilde{y}_4^q)$ 表示的一般四边形的 $T$ 。四个顶点 $(q_1, q_2, q_3, q_4)$ 也以顺时针顺序组织，使得四个点对中 $(b_i, q_i), i = 1, 2, 3, 4$ 中两两之间的欧式距离最小。更准确地，令 $(q_1', q_2', q_3', q_4')$ 以顺时针顺序表示同一个四边形 $G_q$ ，其中 $q_1'$ 是顶部的点（ $G_q$ 为矩形中的左上点）。然后 $q$ 和 $q'$ 之间的关系为：
+1）_Ground Truth representation:_ 对于III-B节中描述的两种目标边界框表示，采用如下的ground-truth的定向文本表征：
+- a）Quadrilateral： 对于每个ground-truth定向文本 $T$ ，令 $G_b = (\tilde{x}_0^b, \tilde{y}_0^b, \tilde{w}_0^b, \tilde{h}_0^b)$ 为其水平矩形ground-truth（即包围 $T$ 的最小水平矩形），其中 $(\tilde{x}_0^b, \tilde{y}_0^b)$ 是 $G_b$ 的中心， $\tilde{w}_0^b$ 和 $\tilde{h}_0^b$ 分别为 $G_b$ 的宽和高。根据公式（1），这个矩形ground-truth也可以表示为 $G_b = (b_1, b_2, b_3, b_4)$ ，其中 (b_1, b_2, b_3, b_4) 是 $G_b$ 顺时针顺序的4个定点， $b_1$ 是左上角点。定向文本ground-truth $T$ 的四个顶点由 $G_q = (q_1, q_2, q_3, q_4) = (\tilde{x}_1^q, \tilde{y}_1^q, \tilde{x}_2^q, \tilde{y}_2^q, \tilde{x}_3^q, \tilde{y}_3^q, \tilde{x}_4^q, \tilde{y}_4^q)$ 表示的一般四边形的 $T$ 。四个顶点 $(q_1, q_2, q_3, q_4)$ 也以顺时针顺序组织，使得四个点对中 $(b_i, q_i), i = 1, 2, 3, 4$ 中两两之间的欧式距离最小。更准确地，令 $(q_1', q_2', q_3', q_4')$ 以顺时针顺序表示同一个四边形 $G_q$ ，其中 $q_1'$ 是顶部的点（ $G_q$ 为矩形时的左上点）。然后 $q$ 和 $q'$ 之间的关系为：
 $$
 \begin{align}
 d_{i, \Delta} = d_E(b_i, q_{(i+\Delta-1)\%4 + 1}'), \Delta = 0, 1, 2, 3  \\

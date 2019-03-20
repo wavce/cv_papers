@@ -143,31 +143,16 @@ $$N_{Q^\ast} = \min_{i=1}^4 D(p_i, p_{(i \mod 4) + 1}) \tag{14}$$
 网络使用Adam优化器端到端训练。为了加速学习，我们均匀地从图像上剪裁 $512 \times 512$ 的块以组成大小为32的mini-batch。Adam的学习率从 $1e-3$ 开始，每27300个mini-batch时衰减十分之一，并停止于 $1e-5$ 。网络训练至性能停止提升。
 
 ## 3.6. Locality-Aware NMS
-为了构成最终结果，阈值处理后留下来的几何形状应该由NMS合并。朴素的NSM算法时间复杂度为 $O(n^2)$ ，其中 $n$ 是候选几何形状的数量，这是不可接受的，因为我们正面临来自密集预测的数以万计的几何形状。
+为了构成最终结果，阈值处理后留下来的几何形状应该由NMS合并。朴素的NMS算法时间复杂度为 $O(n^2)$ ，其中 $n$ 是候选几何形状的数量，这是不可接受的，因为我们正面临来自密集预测的数以万计的几何形状。
 
 假设来自附近像素的几何图形往往高度相关，我们建议逐行合并几何图形，同时在同一行中合并几何图形时，我们将迭代地合并当前遇到的几何图形和最后合并的几何图形。这种改进的技术在最佳场景中以 $O(n)$ 运行。尽管最坏的情况与朴素的情况相同，只要位置假设成立，算法在实践中运行得足够快。 该过程总结在算法1中。
 
-****
-算法1 位置感知（Locality-Aware）NMS
-****
-1: function NMSLOCALITY(Geometries)  
-2: &emsp;&emsp; $S\leftarrow \phi, p\leftarrow \phi$  
-3: &emsp;&emsp; **for** $g \in geometries$ in row first order **do**  
-4: &emsp;&emsp;&emsp;&emsp; **if** $p \neq \phi \wedge$ SHOULDMERGE(G, P) **then**  
-5:  &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $p\leftarrow WEIGHTEDMERGE(g, p)$  
-6: &emsp;&emsp;&emsp;&emsp; **else**  
-7: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; **if** $p \neq \phi$  **then**  
-8: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $S\leftarrow S \cup {p}$  
-9: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; **end if**  
-10: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $p\leftarrow g$   
-11: &emsp;&emsp;&emsp;&emsp; **end if**  
-12: &emsp;&emsp; **end for**  
-13: &emsp;&emsp; **if** $p \neq \phi$ **then**  
-14: &emsp;&emsp;&emsp; $S \leftarrow S \cup {p}$  
-15: &emsp;&emsp; **end if**  
-16: &emsp;&emsp; **return** $STANDARD\_NMS(s)$  
-17: **end function**
-****
+值得注意的是，在 $W_{EIGHTED}M_{ERGE}(g, p)$ 中，合并四边形的坐标通过两个给定四边形的得分进行加权平均。再具体一点，如果 $a=W_{EIGHTED}M_{ERGE}(g, p)$, $a_i = V(g)g_i + V(p)p_i$， $V(a) = V(g) + V(p)$ ，其中 $a_i$ 是 $a$ 中下标为 $i$ 的坐标之一， $V(a)$ 是几何 $a$ 的得分。
+
+实际上，“平均（averaging）”而非“选择（selecting）”几何形状存在一个微妙的差异，就像在标准NMS程序中那样，作为投票机制，这反过来在馈入视频时引入稳定效果。尽管如此，我们仍然采用“NMS”这个词来进行功能描述。
+
+
+![algorithm1](./images/east/algorithm1.png)
 
 ## 4.2. Base Networks
 表2给出了几种即网络
