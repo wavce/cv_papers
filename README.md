@@ -6,7 +6,11 @@
 
 ### Detections
 
-[4. Cheaper Pre-training Lunch: An Efficient Paradigm for Object Detection](./detections/Cheaper Pre-training Lunch.md)
+#### [5. SpineNet:  Learning Scale-Permuted Backbone for Recognition and Locatlization](./detections/SpineNet.md)
+
+​		本文通过NAS搜索用于目标检测的新backbone，这种backbone不再用于如ResNet那种递减的特征图。通过搜索得到的backbone具有scale-permuted的中间特征和cross-scale connection。作者将这种架构称为SpineNet，它在COCO上的性能比ResNet-FpN高3%，而单模型SpineNet-190的AP为52.1%。同时，SpineNet在iNaturalist细粒度数据集上的top-1精度也提高5%。代码见 https://github.com/tensorflow/tpu/tree/master/models/official/detection 。
+
+#### [4. Cheaper Pre-training Lunch: An Efficient Paradigm for Object Detection](./detections/Cheaper Pre-training Lunch.md)
 
 ​		本文提出一种新的主干网络预训练范式——Jigsaw预训练，这种预训练仅需要检测数据集，它从图像上裁剪出包含目标的patch样本，然后将其中的4个样本拼接为一幅完整图像作为训练样本。这种方式的预训练消除了额外数据集的负担，节约整体训练时间（与ImageNet预训练相比，节约了1/4的时间）。同时，为了更好的预训练，还提出了有效感受野自适应的损失函数。MS COCO上的大量实验表明，该方法能够实现同等甚至更好的性能。
 
