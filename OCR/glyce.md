@@ -1,5 +1,4 @@
-Glyce: Glyph-vectors for Chinese Character Representations
-=
+## Glyce: Glyph-vectors for Chinese Character Representations
 
 # Abstract
 直观的是，像中文这样的徽标图形语言的NLP任务应该受益于这些语言中使用的字形信息。然而，由于字形中缺乏丰富的象形证据以及标准计算机视觉模型对字符数据的弱泛化能力，仍然有待找到利用字形信息的有效方法。

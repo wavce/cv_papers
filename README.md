@@ -37,6 +37,13 @@
 ​		4）该方法使用单模型的ResNet-101骨干获得49.4的mAP，而使用SENet154的模型获得51.2的mAP。
 ​		代码已开源：https://github.com/Sense-X/TSD 。
 
-[1. Object as Points (CenterNet)](./detections/CenterNet.md)
+#### [1. Object as Points (CenterNet)](./detections/CenterNet.md)
 
 ​		本文将目标检测建模为单点——目标边界框的中心点。中心点通过关键点估计获得，并同时回归目标的其他属性，例如大小、3D位置、方向甚至姿态。CenterNet在MS COCO数据集上获得最佳的速度准确率平衡，即142FPS获得28.1%的AP、52FPS获得37.4%的AP、多尺度测试下以1.4FPS的速度获得45.1%的AP。使用相同的方法估计KITTI基准测试中的3D边界框，以及COCO关键点数据集中的人体姿态。
+
+### OCR
+
+#### [1. An End-to-End TextSpotter with Explicit Alignment and Attention](./OCR/TextSpotter.md)
+
+​		自然场景中的文本检测和识别长期被认为是两个依次处理的单独任务。由于学习困难和收敛速度的显着差异，共同训练两项任务并非易事。在这项工作中，作者提出一种概念上简单而高效的框架，其在统一框架中同时处理这两个任务。主要贡献有三个方面：（1）提出一种新颖的文本对齐（text-alignment）层，其运行它精准地计算任意方向文本实例的卷积特征，这是提升性能的关键；（2）将字符空间信息作为显式监督，从而引入字符注意力机制（character attention mechanism），这在识别上产生很大改进。两种技术以及用于单词识别的新RNN分支无缝集成到了一个可端到端训练的单一模型中。这使两个任务可以通过共享卷积特征来协同工作，这对于识别具有挑战性的文本实例至关重要。
+
