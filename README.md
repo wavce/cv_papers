@@ -50,3 +50,9 @@
 #### [2. What Is Wrong With Scene Text Recognition Model Comparisons? Dataset and Model Analysis](./OCR/WhatIsWrongInSTR.md)
 
 ​		本文贡献如下：第一，检查训练和评估数据集的不一致之处，以及由于不一致导致的性能差距。第二，引入一个统一的四阶段STR框架，大多数现有的STR模型都适合该框架。使用此框架可对先前提出的STR模块进行广泛评估，并发现先前未探索的模块组合。第三，在一组一致的训练和评估数据集下分析模块对性能、准确性、速度和内存需求的贡献。
+
+### Classifications
+
+#### [1. Designing Network Design Spaces](./classifications/regnet.md)
+
+​		本文提出一种新的网络设计范式。本文的目标是帮助增进对网络设计的理解，并发现可在各种设置之间泛化的设计原则。本文不着重于设计单个网络实例，而是设计可参数化网络总体的网络设计空间。整个过程类似于经典的网络手动设计，但提升到设计空间级别。使用本文的方法，探索网络设计的结构方面，并得出一个低维设计空间，该空间由简单的常规网络组成，我们称之为RegNet。RegNet参数化的核心见解非常简单：良好网络的宽度和深度可以用量化的线性函数来解释。本文分析RegNet的设计空间，并得出与当前网络设计实践不符的有趣发现。RegNet设计空间提供简单而快速的网络，这些网络可以在各种各样的FLOP下正常工作。在可比的训练设置和FLOP之下，RegNet模型优于流行的EfficientNet模型，而在GPU上的速度提高5倍。代码见https://github.com/facebookresearch/pycls。
