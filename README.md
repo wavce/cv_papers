@@ -60,3 +60,9 @@
 #### [1. Designing Network Design Spaces](./classifications/regnet.md)
 
 ​		本文提出一种新的网络设计范式。本文的目标是帮助增进对网络设计的理解，并发现可在各种设置之间泛化的设计原则。本文不着重于设计单个网络实例，而是设计可参数化网络总体的网络设计空间。整个过程类似于经典的网络手动设计，但提升到设计空间级别。使用本文的方法，探索网络设计的结构方面，并得出一个低维设计空间，该空间由简单的常规网络组成，我们称之为RegNet。RegNet参数化的核心见解非常简单：良好网络的宽度和深度可以用量化的线性函数来解释。本文分析RegNet的设计空间，并得出与当前网络设计实践不符的有趣发现。RegNet设计空间提供简单而快速的网络，这些网络可以在各种各样的FLOP下正常工作。在可比的训练设置和FLOP之下，RegNet模型优于流行的EfficientNet模型，而在GPU上的速度提高5倍。代码见https://github.com/facebookresearch/pycls。
+
+### 长尾识别
+
+#### [1.Class-Balanced Loss Based on Effective Number of Samples](./long_tail/class_balanced_loss.md)
+
+​		本文旨在解决长尾数据问题，提出一种新颖的理论框架，其通过有效样本量来对损失函数重加权。样本的有效数量定义为样本的体量，并可以通过简单的公式$(1-\beta^n)/(1-\beta)$计算，其中样本的数量和$\beta \in [0, 1)$为超参数。在人工诱导的长尾CIFAR数据集和包括ImageNet和iNaturalist的大规模数据集上进行了综合实验。实验结果证明，当利用所提出的类平衡损失训练时，网络能够在长尾数据集上获得明显的性能增益。代码见 https://github.com/richardaecn/class-balanced-loss。
