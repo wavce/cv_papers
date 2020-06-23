@@ -66,3 +66,7 @@
 #### [1.Class-Balanced Loss Based on Effective Number of Samples](./long_tail/class_balanced_loss.md)
 
 ​		本文旨在解决长尾数据问题，提出一种新颖的理论框架，其通过有效样本量来对损失函数重加权。样本的有效数量定义为样本的体量，并可以通过简单的公式$(1-\beta^n)/(1-\beta)$计算，其中样本的数量和$\beta \in [0, 1)$为超参数。在人工诱导的长尾CIFAR数据集和包括ImageNet和iNaturalist的大规模数据集上进行了综合实验。实验结果证明，当利用所提出的类平衡损失训练时，网络能够在长尾数据集上获得明显的性能增益。代码见 https://github.com/richardaecn/class-balanced-loss。
+
+#### [2. Equalization Loss for Long-Tailed Object Recognition](./long_tail/EQL.md)
+
+​		本文从一个新颖的角度分析这个问题：一个类的每个正样本可以看作其他类的负样本，使得尾部类别接收到更多令人沮丧的梯度。在此基础上，本文提出一个简单而有效的损失（称为均衡损失（equalization loss））通过简单地忽略稀有类别的梯度来解决长尾稀有类别的问题。均衡损失保护稀有类别的学习在网络参数更新过程中处于不利地位。因此，该模型能够更好地学习稀有类目标的判别特征。没有任何花里胡哨的操作，在LVIS基准测试的稀有和普遍类上，与Mask R-CNN相比，本文的方法分别获得4.1%和4.8%的性能增益。利用高效的均衡损失，在LVIS Challenge 2019上获得第一名。代码见 https://github.com/tztztztztz/eql.detectron2 。
