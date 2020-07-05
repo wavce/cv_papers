@@ -70,3 +70,17 @@
 #### [2. Equalization Loss for Long-Tailed Object Recognition](./long_tail/EQL.md)
 
 ​		本文从一个新颖的角度分析这个问题：一个类的每个正样本可以看作其他类的负样本，使得尾部类别接收到更多令人沮丧的梯度。在此基础上，本文提出一个简单而有效的损失（称为均衡损失（equalization loss））通过简单地忽略稀有类别的梯度来解决长尾稀有类别的问题。均衡损失保护稀有类别的学习在网络参数更新过程中处于不利地位。因此，该模型能够更好地学习稀有类目标的判别特征。没有任何花里胡哨的操作，在LVIS基准测试的稀有和普遍类上，与Mask R-CNN相比，本文的方法分别获得4.1%和4.8%的性能增益。利用高效的均衡损失，在LVIS Challenge 2019上获得第一名。代码见 https://github.com/tztztztztz/eql.detectron2 。
+
+### OCR
+
+#### [2.Look More Than Once: An Accurate Detector for Text of Arbitrary Shapes](./OCR/LOMO.md)
+
+​		受CNN感受野以及诸如采用矩形边界框或四边形的简单表示来描述文本的限制，因此，在处理更具挑战行的文本实例（例如极长的文本和任意形状的文本）时，过去的工作可能存在短板。为了处理这两个问题，本文提出新的文本检测器（成为LOMO），其多次定位文（或者说LOok More than Once）。LOMO包含direct regressor（DR）、iterative refinement module（IRM）和shape expression module（SEM）。
+
+​		首先，通过DR分支生成四边形格式的文本提议。该模块借鉴EAST的架构，但将骨干替换为Resnet50-FPN。
+
+​		然后，IRM通过基于初步提议中提取的特征块的迭代式地精炼逐步感知整个长文本。IRM首先通过RoI transform layer获取$1 \times 8 \times 64 \times 128$特征块；然后将提取到的特征馈入3个$3 \times 3$卷积层；接下来引入角注意力机制，它使用$1 \times 1$和sigmoid获得4个角的注意力图；最后通过group dot production和sum reduction operation获得4个角回归特征。
+
+​		最后，引入SEM来结合文本实例的几何特征（包括文本区域、文本中心线和边界偏移等）以重构出更精确的不规则文本表示。SEM回归这三种类型的特征，从而重构文本实例的精准形状表示。
+
+​		在几种公开基准测试（包括ICDAR2018-RCTW、SCUT-CTW1500、Total-Text、ICDAR2015和ICDAR17-MLT）上的最佳结果证实LOMO惊人的健壮性和有效性。
