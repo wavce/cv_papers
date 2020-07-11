@@ -73,7 +73,7 @@
 
 ### OCR
 
-#### [2.Look More Than Once: An Accurate Detector for Text of Arbitrary Shapes](./OCR/LOMO.md)
+#### [1.Look More Than Once: An Accurate Detector for Text of Arbitrary Shapes](./OCR/LOMO.md)
 
 ​		受CNN感受野以及诸如采用矩形边界框或四边形的简单表示来描述文本的限制，因此，在处理更具挑战行的文本实例（例如极长的文本和任意形状的文本）时，过去的工作可能存在短板。为了处理这两个问题，本文提出新的文本检测器（成为LOMO），其多次定位文（或者说LOok More than Once）。LOMO包含direct regressor（DR）、iterative refinement module（IRM）和shape expression module（SEM）。
 
@@ -84,3 +84,7 @@
 ​		最后，引入SEM来结合文本实例的几何特征（包括文本区域、文本中心线和边界偏移等）以重构出更精确的不规则文本表示。SEM回归这三种类型的特征，从而重构文本实例的精准形状表示。
 
 ​		在几种公开基准测试（包括ICDAR2018-RCTW、SCUT-CTW1500、Total-Text、ICDAR2015和ICDAR17-MLT）上的最佳结果证实LOMO惊人的健壮性和有效性。
+
+#### [2.TextSnake: A Flexible Representation for Detecting Text of Arbitrary Shapes](./OCR/TextSnake.md)
+
+​		本文提出一种新颖的文本表示方法——SnakeText，其目的是解决轴对齐矩形、旋转矩形或四边形表示的缺陷。TextSnake中，文本实例被描述为以对称轴为中心的有序、重叠的圆序列，每个圆都与潜在的可变半径和方向相关。具体而言，模型会预测文本区域、文本中心线和几何图，几何图包含圆的半径、$\cos\theta$和$\sin\theta$（细节见3.6节的标签生成）。	基于TextSnake的文本检测器在Total text和SCUT-CTW1500这两个最新发布的基准测试（特别是自然图像中的曲线文本）以及广泛使用的数据集ICDAR 2015和MSRA-TD500上达到了最先进或可比的性能。具体而言，在Total-Text上，TextSnake的F-measure比基线高40%。
