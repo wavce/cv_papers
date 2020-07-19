@@ -6,7 +6,11 @@
 
 ### Detections
 
-[6.DetectoRS: Detecting Objects with Recursive Feature Pyramid and Switchable Atrous Convolution](./detections/DetectoRS.md)
+#### [7. AutoAssign: Differentiable Label Assignment for Dense Object Detection](./detections/AutoAssign.md)
+
+​		本文提出了一种具有完全可微标签分配策略的无锚目标检测器，称为AutoAssign。它通过生成正负权重图来自动确定正/负样本，以动态修改每个位置的预测值。具体而言，我们提出中心加权模块（center weighting module）来调整类特定的先验分布（category-specific prior distribution），以及置信度加权模块（confidence weighting module）以适应每个实例的特定分配策略。整个标签分配是可微的，并不需要额外的修改便可迁移到不同数据集和任务。MS COCO上的大量实验证明，我们的方法稳定地超过其他最佳的采样策略大约1% $AP$。此外，我们的最佳模型获得52.1%的 $AP$，这比所有已有一阶段检测器好。此外，在其数据集（例如PASCAL VOC、Object365和WiderFace）上的实验也说明AutoAssign的广泛应用能力。
+
+#### [6.DetectoRS: Detecting Objects with Recursive Feature Pyramid and Switchable Atrous Convolution](./detections/DetectoRS.md)
 
 ​		许多现代目标检测器通过使用两次观察和思考（looking and thinking twice）的机制，表现出出色的性能。本文在backbone中探索这种机制已进行目标检测（即多次提取图像特征）。在宏观水平，本文提出递归特征金字塔（Recursive Feature Pyramid），它结合从特征金字塔网络到自下而上的骨干层的额外反馈连接。在微观水平，本文提出Switchable Atrous Convolution，其利用不同的atrous rate卷积特征，并聚合switch函数聚合结果。结合它们产生DetectoRS，其显著提高目标检测的性能。在COCO test-dev上，DetectoRS获得用于目标检测的54.7％的边界框AP，用于实例分割的47.1％的掩膜AP和用于全景分割的49.6％的PQ。代码见 https://github.com/joe-siyuan-qiao/DetectoRS 。
 
@@ -73,6 +77,10 @@
 
 ### OCR
 
+#### [2.TextSnake: A Flexible Representation for Detecting Text of Arbitrary Shapes](./OCR/TextSnake.md)
+
+​		本文提出一种新颖的文本表示方法——SnakeText，其目的是解决轴对齐矩形、旋转矩形或四边形表示的缺陷。TextSnake中，文本实例被描述为以对称轴为中心的有序、重叠的圆序列，每个圆都与潜在的可变半径和方向相关。具体而言，模型会预测文本区域、文本中心线和几何图，几何图包含圆的半径、$\cos\theta$和$\sin\theta$（细节见3.6节的标签生成）。	基于TextSnake的文本检测器在Total text和SCUT-CTW1500这两个最新发布的基准测试（特别是自然图像中的曲线文本）以及广泛使用的数据集ICDAR 2015和MSRA-TD500上达到了最先进或可比的性能。具体而言，在Total-Text上，TextSnake的F-measure比基线高40%。
+
 #### [1.Look More Than Once: An Accurate Detector for Text of Arbitrary Shapes](./OCR/LOMO.md)
 
 ​		受CNN感受野以及诸如采用矩形边界框或四边形的简单表示来描述文本的限制，因此，在处理更具挑战行的文本实例（例如极长的文本和任意形状的文本）时，过去的工作可能存在短板。为了处理这两个问题，本文提出新的文本检测器（成为LOMO），其多次定位文（或者说LOok More than Once）。LOMO包含direct regressor（DR）、iterative refinement module（IRM）和shape expression module（SEM）。
@@ -85,6 +93,20 @@
 
 ​		在几种公开基准测试（包括ICDAR2018-RCTW、SCUT-CTW1500、Total-Text、ICDAR2015和ICDAR17-MLT）上的最佳结果证实LOMO惊人的健壮性和有效性。
 
-#### [2.TextSnake: A Flexible Representation for Detecting Text of Arbitrary Shapes](./OCR/TextSnake.md)
+### MOTs
 
-​		本文提出一种新颖的文本表示方法——SnakeText，其目的是解决轴对齐矩形、旋转矩形或四边形表示的缺陷。TextSnake中，文本实例被描述为以对称轴为中心的有序、重叠的圆序列，每个圆都与潜在的可变半径和方向相关。具体而言，模型会预测文本区域、文本中心线和几何图，几何图包含圆的半径、$\cos\theta$和$\sin\theta$（细节见3.6节的标签生成）。	基于TextSnake的文本检测器在Total text和SCUT-CTW1500这两个最新发布的基准测试（特别是自然图像中的曲线文本）以及广泛使用的数据集ICDAR 2015和MSRA-TD500上达到了最先进或可比的性能。具体而言，在Total-Text上，TextSnake的F-measure比基线高40%。
+#### [4. A Simple Baseline for Multi-Object Tracking](./mots/FairMOT.md)
+
+​		本文中研究将检测和重识别结合后，性能衰退的关键原因，并根据提出的简单基线来处理这个问题。作者分析认为影响跟踪性能的三个关键因素：（1）anchor不适合ReID，因为首先，可能存在多个anchor负责估计相同的目标；其次，8倍的下采样对于ReID太粗糙，目标中心和用于预测目标ID的粗糙anchor位置提取的特不能对齐。（2）Multi-layer Feature Aggregation，因为ReID需要地低级特征和高级特征来促进小型和大型目标。（3）Dimensionality of the ReID Features，ReID一般需要高维特征，因为MOT的训练图像比ReID少，因此使用较低维特征有利于MOT。本文的算法借鉴CenterNet的思想，对于Identity Embedding Loss，使用分类损失，计算softmax 损失。
+
+#### [3. RetinaTrack: Online Single Stage Joint Detection and Tracking](./mots/RetinaTrack.md)
+
+​		本文提出一种简单而有效的检测与跟踪的联合模型，称为RetinaTrack。其基础为RetinaNet，网络输出后FPN预测分为两个阶段：与RetinaNet相同的Task-Shared Post-FPN层和Task-Specific Post-FPN层。在Task-Specific Post-FPN层中，每个anchor都有一个独立的卷积层即将原有输出为$A * K$卷积（对于分类，$K$为类别数；对于回归，$K=4$）分解为$A$个输出为$K$的卷积，这样的操作有效被遮挡的目标与遮挡目标的中心重合的问题。Task-Specific Post-FPN层有三个分支：分类、边界框回归和嵌入，其学习到的是Per-anchor instance-level特征。对于嵌入，使用具有BatchHard策略的triplet loss。
+
+#### [2. Tracking without bells and whistles](./mots/Tracktor.md)
+
+​		本文提出的跟踪器（Tracktor）没有在数据上进行训练或优化。Tracktor利用目标检测器的边界框回归来预测目标在下一帧中的位置，即，首先，目标检测器的回归将帧$t-1$的已有的跟踪边界框$b_{t-1}^k$对齐到帧$t$中的目标的新位置。然后，使用新边界框位置对应的目标分类得分$s_t^k$来停用潜在遮挡的跟踪。其次，如果检测与激活跟踪$B_t = \{b_t^{k_1},b_t^{k_2},\cdots\}$没有实质上的IoU，那么初始化新的跟踪。
+
+#### [1. Simple Online and Realtime Tracking with a Deep Association Metric](./mots/DeepSort.md)
+
+​		在Sort跟踪算法的基础之上增加外观特征，即引入ReID，便形成DeepSort。
