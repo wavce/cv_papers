@@ -6,6 +6,14 @@
 
 ### Detections
 
+#### [9.Probabilistic Anchor Assignment with IoU Prediction for Object Detection](./detections/PAA.md)
+
+​		本文提出一种新颖的锚分配策略（称为Probabilistic Anchor Assignment），其自适应地将锚分为正负样本。具体做法是：首先计算以模型为条件的锚的分数，并为这些分数拟合概率分布。然后，根据锚的概率将模型分为正样本和负样本，对模型进行训练。作者还研究训练和测试目标之间的差距，并提出预测检测边界框的IoU作为定位质量的衡量，从而减小差异。分类和定位质量的组合得分作为NMS中的边界框选择度量，与所提出的锚分配策略很好对齐（这解决了训练和测试中使用的指标不对齐的问题），并产生明显的性能改进。这种分配方案可以灵活用于所有单阶段检测方法，仅需添加一个卷积层。
+
+#### [8.Generalized Focal Loss: Learning Qualified and Distributed Bounding Boxes for Dense Object Detection](./detections/GFL.md)
+
+​		本文深入研究了以上三个基本元素的表示形式：质量估计、分类和定位。在现有的实践中发现两个问题，包括（1）训练和推理中质量估计和分类的使用的不一致（即单独训练，但是在测试时，复合使用），以及（2）当存在歧义和不确定性时（在复杂场景中通常是这种情况），定位的inflexible Dirac Delta分布。为了处理这个问题，作者为这些元素设计新的表示。具体而言，作者将质量估计融入分类预测向量以构成定位质量和分类的联合表示，并使用一个向量来表示边界框定位任意分布。改进的表示消除不一致风险，并准确描述真实数据中的灵活分布，但是对于包含连续标签，其超出Focal Loss的范畴。然后，作者提出Generalized Focal Loss（GFL），将Focal Loss从离散形式推广到连续版本，以实现成功的优化。在COCO test-dev中，GFL使用ResNet-101骨干网达到45.0％的AP，在相同的骨干网络和训练设置下，以更高或相当的推理速度超过最先进的SAPD（43.5％）和ATSS（43.6％） 。值得注意的是，本文的最佳模型可以在单个2080Ti GPU上以10 FPS的速度实现48.2％的单模型单尺度AP。 代码和预训练模型可在https://github.com/implus/GFocal获得。
+
 #### [7. AutoAssign: Differentiable Label Assignment for Dense Object Detection](./detections/AutoAssign.md)
 
 ​		本文提出了一种具有完全可微标签分配策略的无锚目标检测器，称为AutoAssign。它通过生成正负权重图来自动确定正/负样本，以动态修改每个位置的预测值。具体而言，我们提出中心加权模块（center weighting module）来调整类特定的先验分布（category-specific prior distribution），以及置信度加权模块（confidence weighting module）以适应每个实例的特定分配策略。整个标签分配是可微的，并不需要额外的修改便可迁移到不同数据集和任务。MS COCO上的大量实验证明，我们的方法稳定地超过其他最佳的采样策略大约1% $AP$。此外，我们的最佳模型获得52.1%的 $AP$，这比所有已有一阶段检测器好。此外，在其数据集（例如PASCAL VOC、Object365和WiderFace）上的实验也说明AutoAssign的广泛应用能力。
