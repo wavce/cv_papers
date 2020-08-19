@@ -6,6 +6,16 @@
 
 ### Detections
 
+#### [11.RepPoints v2: Verification Meets Regression for Object Detection](./detections/RepPointsV2.md)
+
+​		验证和回归是神经网络中用于预测的两种通用方法。每一个都它们自己的优势：验证可以更容易准确地推断出来，而回归更高效、更适合连续目标变量。因此，仔细组合它们以利用它们的好处通常是有益的。将验证任务引入RepPoints的位置预测中，从而生成RepPoints v2，它使用不同的主干和训练方法，在COCO对象检测基准上比原始RepPoints一致地提高了约2.0 mAP。RepPoints v2还可以通过单个模型在COCO test-dev 上实现 52.1 mAP。
+
+​		具体做法是增加一个验证分支，该分支预测角点热图和within-box foreground；然后与RepPoints进行联合推理。
+
+#### [10.RepPoints: Point Set Representation for Object Detection](./detections/RepPoints.md)
+
+​		现代目标检测器严重依赖矩形边界框，例如锚、提议和最终预测，来表示不同识别阶段的目标。边界框便于使用，但是仅提供目标的粗糙位置，并导致相对粗糙的目标特征提取。本文中，本文提出**RepPoints**（representative points），一种新的更精细的目标表示形式，即一组对定位和识别都有用的采样点。给定用于训练的ground-truth位置和识别目标，RepPoints学会以限制目标空间范围并指示语义上重要的局部区域的方式自动安排它自己。此外，它们不需要使用锚来采样边界框的空间。本文展示了基于RepPoints的无锚目标检测器可以与基于锚的最新检测方法一样有效，使用ResNet-101的模型在COCO test-dev 检测基准上获得46.5 AP和67.4 $AP_{50}$ 。可从https://github.com/microsoft/RepPoints获得代码。
+
 #### [9.Probabilistic Anchor Assignment with IoU Prediction for Object Detection](./detections/PAA.md)
 
 ​		本文提出一种新颖的锚分配策略（称为Probabilistic Anchor Assignment），其自适应地将锚分为正负样本。具体做法是：首先计算以模型为条件的锚的分数，并为这些分数拟合概率分布。然后，根据锚的概率将模型分为正样本和负样本，对模型进行训练。作者还研究训练和测试目标之间的差距，并提出预测检测边界框的IoU作为定位质量的衡量，从而减小差异。分类和定位质量的组合得分作为NMS中的边界框选择度量，与所提出的锚分配策略很好对齐（这解决了训练和测试中使用的指标不对齐的问题），并产生明显的性能改进。这种分配方案可以灵活用于所有单阶段检测方法，仅需添加一个卷积层。
@@ -118,3 +128,9 @@
 #### [1. Simple Online and Realtime Tracking with a Deep Association Metric](./mots/DeepSort.md)
 
 ​		在Sort跟踪算法的基础之上增加外观特征，即引入ReID，便形成DeepSort。
+
+### SuperResolution
+
+#### [1. Learning a Deep Convolutional Network for Image Super-Resolution](./SuperResolution/SRCNN.md)
+
+​		本文提出用于单幅图像超分辨率（Super Resolution：SR）的深度学习方法。本文的方法直接学习低/高分辨率图像之间的端到端映射。这种映射表示为深度卷积神经网络，该网络采用低分辨率图像作为输入，并输出高分辨率图像。作者进一步证明传统基于稀疏编码的SR方法以可以视为深度卷积网络。但是，与单独处理每个组件的传统方法不同，本文的方法联合优化所有层。本文的深度CNN具有轻量化结构，同时展现了最先进的恢复质量，并为实际在线使用提供快速的速度。
