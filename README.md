@@ -134,3 +134,7 @@
 #### [1. Learning a Deep Convolutional Network for Image Super-Resolution](./SuperResolution/SRCNN.md)
 
 ​		本文提出用于单幅图像超分辨率（Super Resolution：SR）的深度学习方法。本文的方法直接学习低/高分辨率图像之间的端到端映射。这种映射表示为深度卷积神经网络，该网络采用低分辨率图像作为输入，并输出高分辨率图像。作者进一步证明传统基于稀疏编码的SR方法以可以视为深度卷积网络。但是，与单独处理每个组件的传统方法不同，本文的方法联合优化所有层。本文的深度CNN具有轻量化结构，同时展现了最先进的恢复质量，并为实际在线使用提供快速的速度。
+
+#### [2. Deeply-Recursive Convolutional Network for Image Super-Resolution](./SuperResolution/DRCN.md)
+
+​		本文提出了一种使用深度递归卷积网络（DRCN）的图像超分辨率方法（SR）。该网络具有非常深的递归层（最多16个递归）。递归深度的增加可以提高性能，而无需为其他卷积引入新参数。尽管有优势，但由于存在梯度爆炸/消失，因此使用标准梯度下降方法学习DRCN非常困难。为了减轻训练的难度，作者提出了两个扩展：递归监督和跳过连接（skip-connection）。 
