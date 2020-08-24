@@ -138,3 +138,7 @@
 #### [2. Deeply-Recursive Convolutional Network for Image Super-Resolution](./SuperResolution/DRCN.md)
 
 ​		本文提出了一种使用深度递归卷积网络（DRCN）的图像超分辨率方法（SR）。该网络具有非常深的递归层（最多16个递归）。递归深度的增加可以提高性能，而无需为其他卷积引入新参数。尽管有优势，但由于存在梯度爆炸/消失，因此使用标准梯度下降方法学习DRCN非常困难。为了减轻训练的难度，作者提出了两个扩展：递归监督和跳过连接（skip-connection）。 
+
+#### [3.Real-Time Single Image and Video Super-Resolution Using an Efficient Sub-Pixel Convolutional Neural Network](./SuperResolution/ESPCN.md)
+
+​		基于深度神经网络的几种模型在单图像超分辨率的重建准确率和计算性能方面都取得巨大成功。在这些方法中，在重建之前，使用单个滤波器将低分辨率（Low Resolution：LR）输入图像放大到高分辨率（High Resolution：HR）空间，通常使用的是bicubic插值。这意味着SR操作在HR空间完成。我们证明这是次优的，并增加了计算复杂度。本文提出了第一个能够在单个K2 GPU上对1080p视频进行实时SR的卷积神经网络（CNN）。为了实现这一点，作者提出了一种新颖的CNN架构，其中在LR空间中提取了特征图。此外，引入高效亚像素卷积层（efficient sub-pixel convolution layer），该层学习一系列的放大滤波器，以将最终的LR特征图升放大HR输出中。使用更复杂的针对每个特征图训练的更复杂的放大滤波器（upscaling filters）有效地替换了SR流水线中的手工双三次（bicubic）滤波器，同时还降低了整个SR操作的计算复杂性。使用公开数据集上的图像和视频评估我们所提出的方法，并表明该方法的效果明显更好（图像上+0.15dB，视频上+0.39dB），比以前的基于CNN的方法快一个数量级。
