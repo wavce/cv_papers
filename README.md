@@ -142,3 +142,7 @@
 #### [3.Real-Time Single Image and Video Super-Resolution Using an Efficient Sub-Pixel Convolutional Neural Network](./SuperResolution/ESPCN.md)
 
 ​		基于深度神经网络的几种模型在单图像超分辨率的重建准确率和计算性能方面都取得巨大成功。在这些方法中，在重建之前，使用单个滤波器将低分辨率（Low Resolution：LR）输入图像放大到高分辨率（High Resolution：HR）空间，通常使用的是bicubic插值。这意味着SR操作在HR空间完成。我们证明这是次优的，并增加了计算复杂度。本文提出了第一个能够在单个K2 GPU上对1080p视频进行实时SR的卷积神经网络（CNN）。为了实现这一点，作者提出了一种新颖的CNN架构，其中在LR空间中提取了特征图。此外，引入高效亚像素卷积层（efficient sub-pixel convolution layer），该层学习一系列的放大滤波器，以将最终的LR特征图升放大HR输出中。使用更复杂的针对每个特征图训练的更复杂的放大滤波器（upscaling filters）有效地替换了SR流水线中的手工双三次（bicubic）滤波器，同时还降低了整个SR操作的计算复杂性。使用公开数据集上的图像和视频评估我们所提出的方法，并表明该方法的效果明显更好（图像上+0.15dB，视频上+0.39dB），比以前的基于CNN的方法快一个数量级。
+
+#### [Accelerating the Super-Resolution Convolutional Neural Network](./SuperResolution/FSRCNN.md)
+
+​		随着深度学习用于超分辨率（SR）的成功，Super-Resolution Convolutional Neural Network（SRCNN）在速度和恢复质量方面都表现出比先前手工特征模型更优越。但是，高计算成本仍妨碍其实际要求实时性能的（4fps）应用。本文旨在加速当前的SRCNN，并提出沙漏形状的CNN结构进行更快、更好的SR。作者主要从三个方面重新设计SRCNN结构。第一，在网络的末端加入反卷积层，然后直接从低分辨率图像（没有插值）到高分辨率图像之间学习映射。第二，通过在映射之前缩小输入特征的尺寸并在之后再扩展，来重新构造映射层。第三，采用较小的滤波器尺寸，但采用更多的映射层。 所提出的模型可实现40倍以上的速度，甚至具有卓越的恢复质量。 此外，还介绍了可以在通用CPU上实现实时性能并同时保持良好性能的参数设置。 还提出了一种相应的迁移策略，用于跨不同的放大因子进行快速训练和测试。
