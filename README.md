@@ -146,3 +146,8 @@
 #### [Accelerating the Super-Resolution Convolutional Neural Network](./SuperResolution/FSRCNN.md)
 
 ​		随着深度学习用于超分辨率（SR）的成功，Super-Resolution Convolutional Neural Network（SRCNN）在速度和恢复质量方面都表现出比先前手工特征模型更优越。但是，高计算成本仍妨碍其实际要求实时性能的（4fps）应用。本文旨在加速当前的SRCNN，并提出沙漏形状的CNN结构进行更快、更好的SR。作者主要从三个方面重新设计SRCNN结构。第一，在网络的末端加入反卷积层，然后直接从低分辨率图像（没有插值）到高分辨率图像之间学习映射。第二，通过在映射之前缩小输入特征的尺寸并在之后再扩展，来重新构造映射层。第三，采用较小的滤波器尺寸，但采用更多的映射层。 所提出的模型可实现40倍以上的速度，甚至具有卓越的恢复质量。 此外，还介绍了可以在通用CPU上实现实时性能并同时保持良好性能的参数设置。 还提出了一种相应的迁移策略，用于跨不同的放大因子进行快速训练和测试。
+
+#### [Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution](./SuperResolution/LapSRN.md)
+
+​		本文提出Laplacian Pyramid Super-Resolution Network（LapSRN），以逐步重建高分辨率图像的子带残差（sub-band residual）。在每个金字塔层（level）中，模型采用粗糙分辨率的特征图作为输入预测高频残差，并使用转置卷积上采样到更精细的级别。该方法不需要bicubic插值作为预处理步骤，并因此极大地减小计算复杂度。作者还使用鲁棒的Charbonnier损失函数在深度监督下训练提出的LapSRN，并实现高质量的重建。此外，网络通过渐进式重建在一次前馈中生成多尺度预测，从而促进了资源感知型应用。对基准数据集的大量定量和定性评估表明，在速度和准确性方面，所提出的算法在性能方面优于最新方法。
+
