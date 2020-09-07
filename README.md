@@ -151,3 +151,6 @@
 
 ​		本文提出Laplacian Pyramid Super-Resolution Network（LapSRN），以逐步重建高分辨率图像的子带残差（sub-band residual）。在每个金字塔层（level）中，模型采用粗糙分辨率的特征图作为输入预测高频残差，并使用转置卷积上采样到更精细的级别。该方法不需要bicubic插值作为预处理步骤，并因此极大地减小计算复杂度。作者还使用鲁棒的Charbonnier损失函数在深度监督下训练提出的LapSRN，并实现高质量的重建。此外，网络通过渐进式重建在一次前馈中生成多尺度预测，从而促进了资源感知型应用。对基准数据集的大量定量和定性评估表明，在速度和准确性方面，所提出的算法在性能方面优于最新方法。
 
+#### [Image Super-Resolution via Deep Recursive Residual Network](./SuperResolution/DRRN.md)
+
+​		基于CNN的模型的单图像超分辨率（Single Image Super-Resolution：SISR），由于深度网络的强大，这些CNN模型学习从低分辨率输入图像到高分辨率目标图像的有效非线性映射，但需要大量参数。本文提出非常深的CNN模型（增加到52个卷积层），称为Deep Recursive Residual Network（DRRN），其致力于建立深度而简洁的网络。具体而言，采用残差学习，以全局和局部的方式来缓解训练非常深度网络的难度；递归学习用于控制模型参数，同时增加深度。大量基准评估证明DRRN明显优于SISR中最先进的方法，同时参数量远少于这些方法。代码见https://github.com/tyshiwo/DRRN_CVPR17。
