@@ -6,6 +6,10 @@
 
 ### Detections
 
+#### [12. OneNet: Towards End-to-End One-Stage Object Detection](./detections/OneNet.md)
+
+​		本文将分类成本（分类损失）和位置成本（定位损失）引入到标签分配中，从而形成成为Minimum Cost Assignment标签分配方案，即将分类成本和定位成本之和最小的样本分配给ground-truth目标。这一简单而有效分配策略之后，消除了一阶段密集检测器中的NMS，从而使检测器成为真正的端到端检测器。
+
 #### [11.RepPoints v2: Verification Meets Regression for Object Detection](./detections/RepPointsV2.md)
 
 ​		验证和回归是神经网络中用于预测的两种通用方法。每一个都它们自己的优势：验证可以更容易准确地推断出来，而回归更高效、更适合连续目标变量。因此，仔细组合它们以利用它们的好处通常是有益的。将验证任务引入RepPoints的位置预测中，从而生成RepPoints v2，它使用不同的主干和训练方法，在COCO对象检测基准上比原始RepPoints一致地提高了约2.0 mAP。RepPoints v2还可以通过单个模型在COCO test-dev 上实现 52.1 mAP。
