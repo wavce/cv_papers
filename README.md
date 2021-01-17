@@ -6,9 +6,13 @@
 
 ### Detections
 
+#### [13. End-to-End Object Detection with Fully Convolution Network](./detections/DeFCN.md)
+
+​		本文为了消除NMS，提出一种新的标签分配方案，该方案称为Prediction-aware One-To-One（POTO），同时，引入3D Max Filtering来抑制跨FPN尺度之间的重复预测。为了获取更辨别性特征（一对一标签分配提供更少的监督，使网络难以学习强壮而鲁棒的特征表示），作者还引入辅助损失，该损失与ATSS相似。详细代码见 https://github.com/Megvii-BaseDetection/DeFCN。
+
 #### [12. OneNet: Towards End-to-End One-Stage Object Detection](./detections/OneNet.md)
 
-​		本文将分类成本（分类损失）和位置成本（定位损失）引入到标签分配中，从而形成成为Minimum Cost Assignment标签分配方案，即将分类成本和定位成本之和最小的样本分配给ground-truth目标。这一简单而有效分配策略之后，消除了一阶段密集检测器中的NMS，从而使检测器成为真正的端到端检测器。
+​		本文将分类成本（分类损失）和位置成本（定位损失）引入到标签分配中，从而形成成为Minimum Cost Assignment标签分配方案，即将分类成本和定位成本之和最小的样本分配给ground-truth目标。这一简单而有效分配策略之后，消除了一阶段密集检测器中的NMS，从而使检测器成为真正的端到端检测器。代码见https://github.com/PeizeSun/OneNet。
 
 #### [11.RepPoints v2: Verification Meets Regression for Object Detection](./detections/RepPointsV2.md)
 
