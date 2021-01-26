@@ -6,6 +6,10 @@
 
 ### Detections
 
+[14.Sparse R-CNN: End-to-End Object Detection with Learnable Proposals](./detections/SparseRCNN.md)
+
+​		本文提出Sparse R-CNN，它是用于图像中目标检测的纯稀疏方法。目标检测上的已有工作严重依赖密集目标候选，例如在大小为$H\times W$的图像特征图网格上预定义的$k$个锚。然而，在我们的方法中，目标识别头提供学习的目标提议的稀疏集（共$N$个提议）来进行分类和定位。通过将$HWk$（多达数十万个）手工设计的候选目标消除为$N$个（例如100个）可学习的建议，Sparse R-CNN完全避免了与候选目标设计和多对一标签分配相关的所有工作。更重要的是，直接输出最终的预测，而没有非极大值抑制过程。Sparse R-CNN与具有挑战性的COCO数据集上公认的检测器基准具有同等的准确性、运行时间和训练收敛性能，例如使用ResNet-50 FPN模型，在标准的3倍训练调度下，以22FPS的速度获得44.5AP。代码见https://github.com/PeizeSun/SparseR-CNN。
+
 #### [13. End-to-End Object Detection with Fully Convolution Network](./detections/DeFCN.md)
 
 ​		本文为了消除NMS，提出一种新的标签分配方案，该方案称为Prediction-aware One-To-One（POTO），同时，引入3D Max Filtering来抑制跨FPN尺度之间的重复预测。为了获取更辨别性特征（一对一标签分配提供更少的监督，使网络难以学习强壮而鲁棒的特征表示），作者还引入辅助损失，该损失与ATSS相似。详细代码见 https://github.com/Megvii-BaseDetection/DeFCN。
