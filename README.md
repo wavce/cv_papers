@@ -6,6 +6,10 @@
 
 ### Detections
 
+[15.Deformable DETR: Deformable Transformers for End-to-End Object Detection](./detections/Deformable DETR.md)
+
+​		由于Transformer注意力模块在处理图像时存在收敛慢、特征图分辨率有限（小目标检测性能低）等问题。作者受可变形卷积的启发，提出Deformable Transformer attention module，该模块的引入加速模型收敛。其次，作者还利用多尺度特征图，进一步提高检测性能。代码见https://github.com/fundamentalvision/Deformable-DETR。
+
 [14.Sparse R-CNN: End-to-End Object Detection with Learnable Proposals](./detections/SparseRCNN.md)
 
 ​		本文提出Sparse R-CNN，它是用于图像中目标检测的纯稀疏方法。目标检测上的已有工作严重依赖密集目标候选，例如在大小为$H\times W$的图像特征图网格上预定义的$k$个锚。然而，在我们的方法中，目标识别头提供学习的目标提议的稀疏集（共$N$个提议）来进行分类和定位。通过将$HWk$（多达数十万个）手工设计的候选目标消除为$N$个（例如100个）可学习的建议，Sparse R-CNN完全避免了与候选目标设计和多对一标签分配相关的所有工作。更重要的是，直接输出最终的预测，而没有非极大值抑制过程。Sparse R-CNN与具有挑战性的COCO数据集上公认的检测器基准具有同等的准确性、运行时间和训练收敛性能，例如使用ResNet-50 FPN模型，在标准的3倍训练调度下，以22FPS的速度获得44.5AP。代码见https://github.com/PeizeSun/SparseR-CNN。
