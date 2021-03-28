@@ -48,7 +48,7 @@ $$\mathbf{FL}(p)=-(1-p_t)^\gamma\log(p_t), p_t = \begin{cases}p, &\mbox{when } y
 
 $$\mathbf{QFL}(\sigma) = -|y - \sigma|^\beta((1-y)\log(1-\sigma) + y\log(\sigma)). \tag{2}$$
 
-注意，$\sigma = y$为QFL的全局最小解。在质$|y - \sigma|^\beta$的行为与调节因子相同：当样例的质量估计不准确以及偏离标签$y$时，调节因子相对较大，因此它更关注学习这种困难样例。随着质量估计越来越准确，即$\sigma \rarr y$，因子逐渐趋于0，良好估计得样例的损失被降权。其中参数$\beta$平滑地控制降权（在我们的实验中，$\beta=2$时，QFL最佳）。
+注意，$\sigma = y$为QFL的全局最小解。$|y - \sigma|^\beta$的行为与调节因子相同：当样例的质量估计不准确以及偏离标签$y$时，调节因子相对较大，因此它更关注学习这种困难样例。随着质量估计越来越准确，即$\sigma \rarr y$，因子逐渐趋于0，良好估计得样例的损失被降权。其中参数$\beta$平滑地控制降权（在我们的实验中，$\beta=2$时，QFL最佳）。
 
 ![fig5](images/GFL/fig5.png)
 

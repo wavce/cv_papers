@@ -6,13 +6,25 @@
 
 ### Detections
 
+[18. You Only Look One-level Feature](./detections/YOLOF.md)
+
+​		本文提出一种没有FPN的一阶段检测器，其指出是分治法解决了目标检测中的优化问题，而不是多尺度特征融合。这种方法称为YOLOF，YOLOF包含两种关键组件：Dilated Encoder和Uniform Matching，并带来与RetinaNet相当的性能，但比RetinaNet快2.5倍。YOLOF还可以匹配DETR的性能，训练速度快了7倍。代码见https://github.com/megvii-model/YOLOF。
+
+[17. Probabilistic two-stage detection](./detections/CenterNet2.md)
+
+​		本文开发了两阶段目标检测的概率解释。第一阶段应当推断恰当的object-vs-background似然，然后，其应当告知检测器的整体分数。标准区域提议网络（RPN）不能很好地推断出这种可似然，但是许多一阶段检测器可以。介绍如何构从任意的SOTA一阶段检测器构建概率两阶段检测器。产生的检测器比它们一阶段和两阶段先驱都快而准。本文的检测器在COCO test-dev上，利用单尺度测试下获得56.4 mAP，比所有公开结果都好。使用轻量的骨干，在Titan Xp上，本文的检测器在COCO上以33fps获得49.2 mAP，比流行的YOLOv4模型好。代码和模型见https://github.com/xingyizhou/CenterNet2。
+
+[16. VarifocalNet: An IoU-aware Dense Object Detector](./detections/VarifocalNet.md)
+
+​		本文提出学习IoU-aware classification score（IACS），其将预测的IoU作为分类学习目标，使得它能够同时表示目标存在的置信度和定位准确率，从而在密集目标检测器中产生更准确的检测排序，更有利于NMS。并且有别于GFL：（1）提出VarifocalLoss，对正负样本进行非堆成加权，（2）提出星形边界框表示和边界框精炼模块。具有Res2Net-101-DCN的最佳模型在COCO test-dev上达到51.3AP，代码见代码见https://github.com/hyz-xmaster/VarifocalNet。
+
 [15.Deformable DETR: Deformable Transformers for End-to-End Object Detection](./detections/Deformable DETR.md)
 
 ​		由于Transformer注意力模块在处理图像时存在收敛慢、特征图分辨率有限（小目标检测性能低）等问题。作者受可变形卷积的启发，提出Deformable Transformer attention module，该模块的引入加速模型收敛。其次，作者还利用多尺度特征图，进一步提高检测性能。代码见https://github.com/fundamentalvision/Deformable-DETR。
 
 [14.Sparse R-CNN: End-to-End Object Detection with Learnable Proposals](./detections/SparseRCNN.md)
 
-​		本文提出Sparse R-CNN，它是用于图像中目标检测的纯稀疏方法。目标检测上的已有工作严重依赖密集目标候选，例如在大小为$H\times W$的图像特征图网格上预定义的$k$个锚。然而，在我们的方法中，目标识别头提供学习的目标提议的稀疏集（共$N$个提议）来进行分类和定位。通过将$HWk$（多达数十万个）手工设计的候选目标消除为$N$个（例如100个）可学习的建议，Sparse R-CNN完全避免了与候选目标设计和多对一标签分配相关的所有工作。更重要的是，直接输出最终的预测，而没有非极大值抑制过程。Sparse R-CNN与具有挑战性的COCO数据集上公认的检测器基准具有同等的准确性、运行时间和训练收敛性能，例如使用ResNet-50 FPN模型，在标准的3倍训练调度下，以22FPS的速度获得44.5AP。代码见https://github.com/PeizeSun/SparseR-CNN。
+​		本文提出Sparse R-CNN，它是用于图像中目标检测的纯稀疏方法。目标检测上的已有工作严重依赖密集目标候选，例如在大小为$H\times W$的图像特征图网格上预定义的$k$个锚。然而，在我们的方法中，目标识别头提供学习的目标提议的稀疏集（共$N$个提议）来进行分类和定位。通过将$HWk$（多达数十万个）手工设计的候选目标消除为$N$个（例如100个）可学习的提议，Sparse R-CNN完全避免了与候选目标设计和多对一标签分配相关的所有工作。更重要的是，直接输出最终的预测，而没有非极大值抑制过程。Sparse R-CNN与具有挑战性的COCO数据集上公认的检测器基准具有同等的准确性、运行时间和训练收敛性能，例如使用ResNet-50 FPN模型，在标准的3倍训练调度下，以22FPS的速度获得44.5AP。代码见https://github.com/PeizeSun/SparseR-CNN。
 
 #### [13. End-to-End Object Detection with Fully Convolution Network](./detections/DeFCN.md)
 
