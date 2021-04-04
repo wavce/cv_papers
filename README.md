@@ -6,6 +6,10 @@
 
 ### Detections
 
+[19.Pyramid Vision Transformer: A Versatile Backbone for Dense Prediction without Convolutions](./detections/PVT.md)
+
+​		本文开发了一种具有金字塔结构的Transformer网络，其可以用于各种密集预测任务（目标检测、实例分割和语义分割）。代码见https://github.com/whai362/PVT。
+
 [18. You Only Look One-level Feature](./detections/YOLOF.md)
 
 ​		本文提出一种没有FPN的一阶段检测器，其指出是分治法解决了目标检测中的优化问题，而不是多尺度特征融合。这种方法称为YOLOF，YOLOF包含两种关键组件：Dilated Encoder和Uniform Matching，并带来与RetinaNet相当的性能，但比RetinaNet快2.5倍。YOLOF还可以匹配DETR的性能，训练速度快了7倍。代码见https://github.com/megvii-model/YOLOF。
