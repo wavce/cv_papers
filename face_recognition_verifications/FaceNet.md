@@ -89,47 +89,8 @@ $$L = \sum_i^N\Big[\|f(x_i^a) - f(x_i^p)\|_2^2 - \|f(x_i^a) - f(x_i^n)\|_2^2 + \
 
 ​		我们还探索将在线生成三元组和离线生成三元组结合，它可能允许使用较小的批大小，但是实验尚无定论。
 
-​		在实践中，选择最困难的负类可能会导致训练初期的局部最小值过低（bad local minima），特别是会导致模型崩溃（即$f(x)= 0$）。为了缓解这个问题，选择$x_i^n$使得
+​		在实践中，选择最困难的负面因素可能会导致训练初期的局部最小值过低（bad local minima），特别是会导致模型崩溃（即$f(x)= 0$）。为了缓解这个问题，选择$x_i^n$使得
 
 $$\|f(x_i^a) - f(x_i^p)\|_2^2 < \|f(x_i^a) - f(x_i^n)\|_2^2. \tag{4}$$
 
-我们称这些负示例为_semi-hard_，因为它们比正类示例更远离，但是仍困难，因为平方距离接近anchor-positive距离。这些负类位于margin $\alpha$中。
-
-​		如上所述，正确的三元组选择对于快速收敛至关重要。一方面，我们想要使用小型mini-batch，因为这些小型mini-batch会在随机梯度下降（SGD）期间提高收敛性[20]。另一方面，实施细节使数十到数百个示例的批次效率更高。但是，关于批大小的主要限制是我们从mini-batch中选择硬相关三元组的方式。 在大多数实验中，我们使用的批大小约为1800个示例。
-
-#### 3.3. Deep Convolutional Networks
-
-​		在我们的所有实验中，我们使用SGD和AdaGrad训练CNN。在大多数实验中，我们从0.05的学习率开始，我们将其降低以最终确定模型。随机初始化模型，与[16]相似，并在CPU集群上训练1000到2000小时。损失的减小（准确率的增加）在第500小时训练后会急剧放慢，但是额外的训练仍可以提高性能。margin $\alpha$设置为0.2。
-
-​		网络结构如表1所示。
-
-![table1](images/FaceNet/table1.png)
-
-![table2](images/FaceNet/table2.png)
-
-### 4. 数据集和评估
-
-​		我们在四个数据集上评估我们的方法，除了LFW和YouTube Faces之外，我们在人脸验证任务上评估了我们的方法。 即给定一对两张人脸图像，平方$L_2$距离阈值$D(x_i,x_j)$用于确定相同和不同的分类。相同身份的所有人脸对表示为$\mathcal{P}_{\mathbb{same}}$，而不同身份的所有人脸对表示为$\mathcal{P}_{\mathbb{diff}}$。
-
-​		我们将所有_true accepts_集定义为
-
-$$\mathbf{TA}(D)=\{(i,j) \in \mathcal{P}_{\mathbb{same}}, \mbox{ with } D(x_i, x_j) \le d\}.\tag{5}$$
-
-这些是在阈值$d$上正确分类为_same_的人脸对$(i,j)$。相似地，
-
-$$\mathbf{FA}(d) = \{(i,j)\in\mathcal{P}_{\mathbb{diff}}, \mbox{ with } D(x_i,x_j) \le d\} \tag{6}$$
-
-为未能正确分类为_same（false accept）_的所有对集。
-
-​		给定人脸距离$d$的验证率$\mathbf{VAL}(d)$和false accept rate $\mathbf{FAR}(d)$定义为：
-
-$$\mathbf{VAL}(d) = \frac{|\mathbf{TA}(d)|}{|\mathcal{P}_{\mathbb{same}}|}, \mathbf{FAR}(d) = \frac{|\mathbf{FA}(d)|}{|\mathcal{P}_{\mathbf{diff}}|}.\tag{7}$$
-
-### 5. 实验
-
-​		除非另有说明，否则我们将使用100M-200M个训练人脸缩略图，其中包含大约8M个不同的身份。在每幅图像上运行人脸检测器，生成每幅人脸周围的紧密边界框。这些人脸缩略图被调整到相应网络的输入大小。我们的实验中，输入大小从$96 \times 96$到$224 \times 224$。
-
-#### 5.1. Computation Accuracy Trade-off
-
-![fig4](images/FaceNet/fig4.png)
-
+我们称这些负示例为_semi-hard_，因为它们比正类示例更远离

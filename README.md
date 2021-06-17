@@ -2,9 +2,51 @@
 
 ### 描述
 
-计算机视觉方面的分类、对象检测、图像分割、人脸检测、OCR等中文翻译
+计算机视觉方面的分类、对象检测、图像分割、人脸检测、OCR等中文翻译。
 
-### Detections
+[30.Dual-stream Network for Visual Recognition](./backbones/DSNet.md)
+
+​		本文提出一种通用的Dual-stream Network（DS-Net）来充分利用局部和全局特征的表示能力进行图像分类。DS-Net可以同时计算细粒度和集成特征，并高效地融合它们。具体而言，用一种Intra-scale Propagation模块处理每个块中的不同分辨率，以及一种Inter-Scale Alignment模块来进行两个尺度上的跨特征信息交互。此外，还设计一种Dual-strem FPN（DS-FPN）来进一步增强下游密集预测的上下文信息。
+
+[29.ResT: An Efficient Transformer for Visual Recognition](./backbones/ResT.md)
+
+​		本文提出一种高效的多尺度视觉Transformer（称为ResT），其能够作为图像识别的通用主干。与已有的Transformer方法不同，已有的方法利用标准的Transformer块来以固定分辨率处理原始图像，ResT有几个优势：（1）构建内存高效的多头自注意力，其通过简单的depth-wise卷积压缩内存，并在保持多头的多样性能力的同时，跨注意力头维度映射交互；（2）将位置编码构建为空间注意力，其更灵活，并且可以处理任意大小的输入图像，而没有插值或微调；（3）与其在每个阶段开始时直接标记化，将补丁嵌入设计为在令牌映射上具有步幅的堆叠的重叠卷积操作。在图像分类和下游任务上全面验证了 ResT。实验结果表明，所提出的ResT可以大幅领先最近的SOTA骨干，这表明ResT的有作为强骨干的潜力。代码和模型见https://github.com/wofmanaf/ResT。
+
+[28.SOLOv2: Dynamic, Faster and Stronger](./instance_segmentations/SOLOv2.md)
+
+​		本文在SOLO的基础之上提出将掩膜分支解藕为掩膜核分支和掩膜特征分支，用预测的掩膜核卷积掩膜特征。同时，还提出Matrix NMS，加速NMS过程，同时也相比传统NMS取得准确率上的提高。代码见https://github.com/aim-uofa/AdelaiDet。
+
+[27. GhostNet: More Features from Cheap Operations](./backbones/GhostNet.md)
+
+​		本文提出一种新颖的Ghost模块来从便宜的操作（cheap operations）中生成更多特征图。基于一组固有的特征图，我们使用一系列便宜成本（cheap cost）的线性变换来生成许多ghost特征图，这些特征图可以完整反映固有特征潜在的信息。所提出的Ghost模块可以作为即插即用的组件来更新已有的卷积神经网络。设计Ghost块以堆叠成Ghost模块，然后建立轻量化的GhostNet。在基准测试上的实验证明，所提出的Ghost模块是基准模型中卷积层的令人印象深刻的替代方案，在ImageNet ILSVRC-2012分类数据集上，GhostNet以相似的计算成本获得比MobileNetV3更高的识别性能（例如75.7%的top-1准确率）。代码见https://github.com/iamhankai/ghostnet。
+
+[26.Activate or Not: Learning Customized Activation](./backbones/ACON.md)
+
+​		本文提出一种简单、高效且通用的激活函数（称为ACON），其通过数据学习激活神经元与否。作者将通用的Maxout系列解释为ACON系列，特别地，作者任务Swish是ReLU的平滑近似，这与ACON是其他Maxout系列的近似相似。ACON在轻量化网络和更大的网络上都获得较大的性能改进，可以在https://github.com/nmaac/acon上找到代码。
+
+[25. Rethinking Channel Dimensions for Efficient Model Design](./backbones/ReXNet.md)
+
+​		在有限的计算成本中设计高效的模型是具有挑战的。作者认为轻量化模型的准确率收到设计习惯的局限：通道维度逐阶段的配置，看起来像网络阶段的分段线性函数。本文研究一种有效的通道尺寸配置，以实现比传统的更好的性能。为此，作者经验上研究如何通过分析输出特征的阶来恰当地设计单个层。然后，通过在计算成本限制下搜索有关通道配置的网络架构来研究模型的通道配置。基于这种研究，提出一种简单而有效的通道配置，其可以由层索引参数化。因此，在通道参数化之后提出的模型在ImageNet分类和迁移学习任务（包括COCO目标检测，COCO实例分割和细粒度分类）上均取得了卓越的性能。可通过https://github.com/clovaai/rexnet获得代码和ImageNet预训练的模型。
+
+[24. SOLO: Segmenting Objects by Locations](./instance_segmentations/SOLO.md)
+
+​		本文提出一种新的、简单的方法来进行实例分割。本文根据实例位置和大小将类别分配实例中的每个像素，因此很好的将实例掩膜分割转换为分类可解决的问题。将实例分割分解为语义类别分类和二值掩膜分类任务，作者完全消除了边界框预测和分组后处理过程。在准确率方面达到Mask R-CNN的水平。
+
+[23.Swin Transformer: Hierarchical Vision Transformer using Shifted Windows](./backbones/SwinTransformer.md)
+
+​		本文提出一种新的视觉Transformer（称为Swin Transformer），其可以用作计算机视觉的通用主干。作者首先引入滑动窗口机制的多头自注意力，这极大地减小计算复杂度，使Transformer的计算复杂度从图像大小的二次方减小到图像大小的线性复杂度（$4hwC^2 + 2(hw)^2C \rarr 4hwC^2 + 2M^2hwC$），由于滑动窗口是以不重叠的方式均匀划分图像，这限制了它的建模能力，因此作者引入shifted window机制，即窗口配置通过将窗口从规则划分的窗口中平移$(\lfloor \frac{M}{2}\rfloor, \lfloor \frac{M}{2}\rfloor)$像素，在计算多头注意力之后，再将移动的窗口移会原来的位置。最后模型在分类、检测、实例分割和语义分割上都获得SOTA。该代码和模型将在https://github.com/microsoft/Swin-Transformer上公开提供。
+
+[22.Revisiting ResNets: Improved Training and Scaling Strategies](./backbones/ResNet-RS.md)
+
+​		本文认为最佳性能的缩放策略取决于训练方案，并提供了两种新的缩放策略：（1）在可能发生过拟合的方案中缩放模型深度（否则宽度缩放更可取）； （2）提高图像分辨率的速度比以前建议的要慢（Tan＆Le，2019）。使用改进的训练和缩放策略，本文设计一族ResNet架构（ResNet-RS），其在TPU上比EffcientNets块1.7倍到2.7倍，同时在ImageNet上获得相似的准确率。在大尺度半监督学习设置中，ResNet-RS获得86.2%的top-1 ImageNet准确率，同时比EfficientNet-NoisyStudent块4.7倍。训练技术提高一系列下游任务（一流的SOTA自监督算法）的性能，并扩展到Kinetics-400的视频分类上。本文建议从业者使用这些简单的经过修订的ResNets作为将来研究的基准。代码见 https://github.com/tensorflow/tpu/tree/master/models/official/resnet/resnet_rs。
+
+[21.ReXNet: Diminishing Representational Bottleneck on Convolutional Neural Network](./backbones/ReXNet.md)
+
+​		本文认为常规网络存在表示瓶颈，表示瓶颈会导致模型性能下降。本文分析上千个随机模型生成的矩阵秩，从而得出结论特征的矩阵秩与模型的表示瓶颈相关，秩越大模型表示能力越强。所以，本文从输入的通达数量、扩张层的数量和非线性函数（使用Swish-1替换其他非线性函数）使用三个方面来增大特征的矩阵秩。本文给出了一种新的模型设计思路。代码和预训练模型可在https://github.com/clovaai/rexnet上获得。
+
+[20.CvT: Introducing Convolutions to Vision Transformers](./classifications/Cvt.md)
+
+​		本文提出一种新的架构，称为Convolutional vision Transformer（CvT），其通过将卷积引入ViT中以产生两种设计的最佳效果，从而提高了Vision Transformer（ViT）的性能和效率。这通过两种主要修改来完成：包含新卷积令牌（token）嵌入的Transformer层次结构，以及利用卷积投影的卷积Transformer块。这些改变将卷积神经网络的理想特性（即平移、尺度和畸变的不变性）引入ViT架构，同时保留Transformer的优点（即动态注意力、全局上下文和更好的泛化能力）。本文通过进行广泛的实验来验证CvT，表明该方法与ImageNet-1k上的其他Vision Transformer和ResNet相比，具有更少的参数和更低的FLOP，可实现最新的性能。此外，当在更大的数据集（例如ImageNet-22K）上预训练，并在下游任务上微调时，仍能维持性能增益。在ImageNet-22k上预训练，本文的CvT-W24在ImageNet-1K验证集上获得87.7%的top-1准确率。最后，本文的结果表明位置嵌入编码（已有的Vision Transformer中的关键组件）可以在本文的模型中被安全移除，其简化更高分辨率视觉任务的设计。代码见https://github.com/leoxiaobin/CvT。
 
 [19.Pyramid Vision Transformer: A Versatile Backbone for Dense Prediction without Convolutions](./detections/PVT.md)
 
@@ -186,3 +228,4 @@
 #### [Image Super-Resolution via Deep Recursive Residual Network](./SuperResolution/DRRN.md)
 
 ​		基于CNN的模型的单图像超分辨率（Single Image Super-Resolution：SISR），由于深度网络的强大，这些CNN模型学习从低分辨率输入图像到高分辨率目标图像的有效非线性映射，但需要大量参数。本文提出非常深的CNN模型（增加到52个卷积层），称为Deep Recursive Residual Network（DRRN），其致力于建立深度而简洁的网络。具体而言，采用残差学习，以全局和局部的方式来缓解训练非常深度网络的难度；递归学习用于控制模型参数，同时增加深度。大量基准评估证明DRRN明显优于SISR中最先进的方法，同时参数量远少于这些方法。代码见https://github.com/tyshiwo/DRRN_CVPR17。
+
