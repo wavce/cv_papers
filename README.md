@@ -4,6 +4,10 @@
 
 计算机视觉方面的分类、对象检测、图像分割、人脸检测、OCR等中文翻译。
 
+[31.Twins: Revisiting the Design of Spatial Attention in Vision Transformers](./backbones/Twins.md)
+
+​		本文回顾了视觉Transformer中的空间注意力的设计。首先发现PVT中的全局子采样注意力高度有效，并利用合适的位置编码，可以产生与Swin相当的性能，由此产生了Twins-PCPVT。进一步，作者提出一种简单的空间注意力替换PVT中缺乏有效全局子采样的注意力，即受可分离卷积启发的可分离注意力机制——spatially separable self-attention（SSSA），SSSA包含两种操作（i）locally-grouped self-attention（LSA）和（ii）global sub-sampled attention（GSA），其中LSA捕获细粒度和短距离信息，GSA处理长距离和全局信息。代码见https://git.io/Twins。
+
 [30.Dual-stream Network for Visual Recognition](./backbones/DSNet.md)
 
 ​		本文提出一种通用的Dual-stream Network（DS-Net）来充分利用局部和全局特征的表示能力进行图像分类。DS-Net可以同时计算细粒度和集成特征，并高效地融合它们。具体而言，用一种Intra-scale Propagation模块处理每个块中的不同分辨率，以及一种Inter-Scale Alignment模块来进行两个尺度上的跨特征信息交互。此外，还设计一种Dual-strem FPN（DS-FPN）来进一步增强下游密集预测的上下文信息。
