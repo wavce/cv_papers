@@ -4,6 +4,32 @@
 
 计算机视觉方面的分类、对象检测、图像分割、人脸检测、OCR等中文翻译。
 
+[27.CSWin Transformer: A General Vision Transformer Backbone with Cross-Shaped Windows](./backbones/CSWin.md)
+
+​		本文提出Cross-Shaped Window self-attention，其在水平和垂直条纹中进行自注意力操作，这种条纹可以让模型获得强建模能力，同时限制计算成本。根据网络深度调整条纹宽度：浅层有小宽度、深层有更大的宽度。更大的条纹宽度鼓励长范围元素之间的更强连接，并在减小计算成本的情况下获得更好的网络容量。作者还提出Locally-enhanced Positional Encoding （LePE），可以用于任意大小输入图像。代码见https://github.com/microsoft/CSWin-Transformer。
+
+[26.Tokens-to-Token ViT: Training Vision Transformers from Scratch on ImageNet](./backbones/T2T.md)
+
+​	作者发现：1）输入图像的简单令牌化难以建模相邻像素之间的局部结构，如边缘和线条，从而导致较低的训练样本效率；2）ViT 的冗余注意力主干设计导致固定计算预算和有限训练样本的有限特征丰富性。作者提出Tokens-To-Token Vision Transformer （T2T-ViT），其包含1）逐层令牌到令牌 (T2T) 转换，通过递归地将相邻令牌聚合为一个令牌（Tokens-To-Token），逐步将图像结构化为令牌，这样可以对由周围令牌表示的局部结构进行建模，并且可以减少令牌长度；2）经过实证研究后，由 CNN 架构设计驱动的视觉transformer具有深窄结构的高效主干。代码见https://github.com/yitu-opensource/T2T-ViT。
+
+[25.LeViT: a Vision Transformer in ConvNet’s Clothing for Faster Inference](./backbones/LeViT.md)
+
+​		本文提出用于快速推理图像分类的混合神经网络，该网络将卷积和transformer结合，在不同计算平台上获得极快的推理速度和不错的分类精度。代码见https://github.com/facebookresearch/LeViT。
+
+[24.Transformer in Transformer](./backbones/TNT.md)
+
+​		本文向视觉transformer块中添加一个新的transformer块，从在捕获贴片级的全局信息时，还能获取像素级的局部信息。具体实现见https://github.com/huawei-noah/noah-research/tree/master/TNT。
+
+[33. EfficientNetV2: Smaller Models and Faster Training](./backbones/EfficientNetV2.md)
+
+​		本文针对EfficientNets的训练和推理耗时长的缺点，提出一系列改进：（1）加入Fused-MBConv的新搜索空间，（2）渐进式学习策略，将训练过程分为多个阶段，然后依次增加图像大小和加强正则化。代码和权重见https://github.com/google/automl/tree/master/efficientnetv2。
+
+[32. Container: Context Aggregation Network](./backbones/Container.md)
+
+​		本文证明许多流行架构的主要差异源于其聚合模块的变化。这些差异实际上可以表示为聚合器内的亲和矩阵（`或者翻译为相似矩阵`）（affinity matrix）的变体，该矩阵用于确定查询向量与其上下文之间的信息传播。例如，在ViTs[14、15]中，这种亲和矩阵使用键和查询计算动态生成；但是在Xception架构[8]（其采用深度卷积）中，亲和矩阵示静态的——不管位置如何，亲和权重都相同，并且不管大小如何，它们在所有输入图像上都相同。最后，MLP-Mixer [50] 还使用了一个静态亲和矩阵，该矩阵在输入的范围内变化。
+
+​		沿着这种统一观点，作者提出了 CONTAINER（上下文聚合网络），这是一个用于多头上下文聚合的通用构建块。CONTAINER块包含基于聚合的静态亲以及动态亲和，其使用可学习的混合系数组合。这保证CONTAINER块处理长范围信息，同时是仍利用局部卷积操作的归纳偏置。CONTAINER块易于实现，可以很容易地替代到许多当今的神经架构中，并产生高性能的网络，同时收敛速度更快，数据效率更高。
+
 [31.Twins: Revisiting the Design of Spatial Attention in Vision Transformers](./backbones/Twins.md)
 
 ​		本文回顾了视觉Transformer中的空间注意力的设计。首先发现PVT中的全局子采样注意力高度有效，并利用合适的位置编码，可以产生与Swin相当的性能，由此产生了Twins-PCPVT。进一步，作者提出一种简单的空间注意力替换PVT中缺乏有效全局子采样的注意力，即受可分离卷积启发的可分离注意力机制——spatially separable self-attention（SSSA），SSSA包含两种操作（i）locally-grouped self-attention（LSA）和（ii）global sub-sampled attention（GSA），其中LSA捕获细粒度和短距离信息，GSA处理长距离和全局信息。代码见https://git.io/Twins。
